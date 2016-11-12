@@ -1,0 +1,82 @@
+JPacman Scenarios
+(c) Arie van Deursen, Delft University of Technology
+25 January 2011
+
+
+1. Background
+
+This document describes a series of additional JPacman user scenarios 
+for UNDO story, following the format of behavior-driven development 
+(see http://dannorth.net/whats-in-a-story/). 
+Thus, each scenario is of the form:
+
+Title (one line describing the story)
+ 
+Narrative:
+As a    [role]
+I want  [feature]
+So that [benefit]
+ 
+Acceptance Criteria: (presented as Scenarios)
+ 
+Scenario 1: Title
+Given [context]
+  And [some more context]...
+When  [event]
+Then  [outcome]
+  And [another outcome]...
+ 
+Scenario 2: ...
+
+
+
+STORY 7 -- UNDO:
+As a player,
+ I want to be able to undo a move I regret, 
+ including all ghost moves made since my previous move; 
+So that I can continue the game in the state just before my last move.
+
+Scenario S7.1: Undo the player's move
+Given the game has started,
+  and my pacman has moved to an empty cell;
+When  I press "Undo" button;
+Then  my pacman moves to the cell it was previously in,
+  and the ghosts move to the cell they were in just before my last move.
+
+Scenario S7.2: The player vomits out the food
+Given the game has started,
+  and my pacman has moved to a cell containing food;
+When  I press "Undo" button;
+Then  my pacman moves to the cell it was previously in,
+  and the food reappears in the cell I had previously moved to,
+  and the points I earn from eating that food are reduced from my score,
+  and the ghosts move to the cell they were in just before my last move.
+
+Scenario S7.3: Pacman resurrects
+Given the game has started,
+  and pacman has died by ghost;
+When  I press the "undo" button;
+Then  resurrect pacman in the previous cell, 
+  and ghost in previous cell, 
+  and the games resumes from the state it was in just before my last move. 
+
+Scenario S7.4: Undo player's win, extends S7.2
+Given the game has started,
+  and I have won the game; 
+When  I press the "undo" button; 
+Then  I "un-win" the game,
+  and move ghost to the cell it was in just before my last move, 
+  and make food in cell visible again.
+
+Scenario S7.5: Undo the ghost's move to a cell containing food
+Given the game has started,
+  and ghost is currently in a cell where there was food before it got there;
+When  I press the "undo" button;
+Then  move ghost to the cell it was in just before my last move, 
+  and make food in cell visible again.
+  
+Scenario S7.6: Suspend the game,
+Given the game has started,
+  and I have pressed the "undo" button;
+When  a tick event occurs;
+Then  all moves from ghosts and the player are suspended.
